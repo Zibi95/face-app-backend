@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const users = [
   {
@@ -29,11 +31,15 @@ app.get('/', (req, res) => {
 
 app.post('/signin', (req, res) => {
   const { email, password } = req.body;
+  if (
+    email === users[users.length - 1].email &&
+    password === users[users.length - 1].password
+  ) {
+    res.json(users[0]);
+    res.json('succes');
+  }
 
-  (email === users[users.length - 1].email &&
-    password === users[users.length - 1].password &&
-    res.send('udało się')) ||
-    res.send('nie udało się');
+  res.status(400).json('error logging in');
 });
 
 app.post('/register', (req, res) => {
@@ -50,9 +56,9 @@ app.post('/register', (req, res) => {
       entries: 0,
       joined: new Date(),
     })) ||
-    res.send('brakuje danych');
+    res.json('brakuje danych');
 
-  res.send(users);
+  res.json(users);
 });
 
 app.get('/profile/:id', (req, res) => {
