@@ -9,6 +9,8 @@ const bcrypt = require('bcryptjs');
 const knex = require('knex');
 
 const app = express();
+app.use(cors());
+
 const db = knex({
   client: 'pg',
   connection: {
@@ -20,7 +22,6 @@ const db = knex({
 });
 
 app.use(express.json());
-app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('It works');
@@ -33,6 +34,8 @@ app.post('/register', register.handleRegister(db, bcrypt));
 app.get('/profile/:id', profile.getFrofile(db));
 
 app.put('/image', image.handleImage(db));
+
+app.post('/imageurl', image.handleApiCall());
 
 app.listen(3000, () => {
   console.log('Im listening');
