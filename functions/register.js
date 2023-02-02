@@ -1,6 +1,9 @@
 const handleRegister = (db, bcrypt) => (req, res) => {
   const { email, password, name } = req.body;
 
+  if (!email || !password || !name)
+    return res.status(400).res.json('Not enough data');
+
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
 
@@ -16,7 +19,7 @@ const handleRegister = (db, bcrypt) => (req, res) => {
       });
   })
     .then(user => res.json(user))
-    .catch(err => res.status(400).json('Unable to register'));
+    .catch(err => res.status(400).json('Email already used'));
 };
 
 module.exports = {

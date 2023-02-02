@@ -1,6 +1,8 @@
 const getFrofile = db => (req, res) => {
   const { id } = req.params;
 
+  if (!id) return res.status(400).json('Profile not found');
+
   db.select('*')
     .from('users')
     .where('id', '=', id)
