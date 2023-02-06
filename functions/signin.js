@@ -3,7 +3,6 @@ const handleSignIn = (db, bcrypt) => (req, res) => {
 
   if (!email || !password) return res.json('Not enough data');
 
-  console.log(db);
   db.select('*')
     .from('login')
     .where('email', '=', email)
