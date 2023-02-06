@@ -1,8 +1,7 @@
 const handleRegister = (db, bcrypt) => (req, res) => {
   const { email, password, name } = req.body;
 
-  if (!email || !password || !name)
-    return res.status(400).res.json('Not enough data');
+  if (!email || !password || !name) return res.json('Not enough data');
 
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
