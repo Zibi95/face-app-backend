@@ -12,6 +12,7 @@ const app = express();
 app.use(cors());
 
 const { PORT, PG_CONNECTION_STRING } = process.env;
+console.log(PG_CONNECTION_STRING);
 const db = knex({
   client: 'pg',
   connection: PG_CONNECTION_STRING,
