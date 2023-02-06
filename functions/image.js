@@ -33,14 +33,10 @@ const handleApiCall = () => (req, res) => {
       }
 
       if (response.status.code !== 10000) {
-        console.log(
-          'Post model outputs failed, status: ' + response.status.description
-        );
+        return res.status(400).json('Fetch failed');
       }
 
-      // Since we have one input, one output will exist here.
-
-      res.json(response);
+      return res.json(response);
     }
   );
 };
