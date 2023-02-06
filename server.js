@@ -27,10 +27,6 @@ const db = knex({
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('It works');
-});
-
 app.post('/signin', signin.handleSignIn(db, bcrypt));
 
 app.post('/register', register.handleRegister(db, bcrypt));
