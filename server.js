@@ -12,10 +12,10 @@ const app = express();
 app.use(cors());
 
 const { PORT, PG_CONNECTION_STRING } = process.env;
-
 const db = knex({
   client: 'pg',
-  connection: PG_CONNECTION_STRING,
+  connection:
+    'postgres://face_app_db_user:4cUVDk3t4RfAxv7B8wzqFCHJ0J4tNXbD@dpg-cfghl09a6gdma8gf5kc0-a.frankfurt-postgres.render.com/face_app_db?ssl=true',
 });
 
 app.use(express.json());
@@ -34,4 +34,6 @@ app.put('/image', image.handleImage(db));
 
 app.post('/imageurl', image.handleApiCall());
 
-app.listen(PORT || 3000);
+app.listen(PORT || 3000, () => {
+  console.log('OK');
+});

@@ -5,7 +5,6 @@ const handleRegister = (db, bcrypt) => (req, res) => {
 
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
-
   db.transaction(trx => {
     return trx('login')
       .insert({ email: email, hash: hash })
@@ -17,8 +16,9 @@ const handleRegister = (db, bcrypt) => (req, res) => {
         });
       });
   })
+    .catch(err => res.json('Email already used'))
     .then(user => res.json(user))
-    .catch(err => res.status(400).json('Email already used'));
+    .catch(err => res.json('Something went wrong'));
 };
 
 module.exports = {
