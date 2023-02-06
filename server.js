@@ -16,7 +16,7 @@ const { PORT, DB_PASSWORD } = process.env;
 const db = knex({
   client: 'pg',
   connection: {
-    host: 'dpg-cfghl09a6gdma8gf5kc0-a.frankfurt-postgres.render.com',
+    host: 'postgres://face_app_db_user:4cUVDk3t4RfAxv7B8wzqFCHJ0J4tNXbD@dpg-cfghl09a6gdma8gf5kc0-a/face_app_db',
     user: 'face_app_db_user',
     password: DB_PASSWORD,
     database: 'face_app_db',
