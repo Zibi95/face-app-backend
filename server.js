@@ -11,11 +11,18 @@ const knex = require('knex');
 const app = express();
 app.use(cors());
 
-const { PORT, PG_CONNECTION_STRING } = process.env;
-console.log(PG_CONNECTION_STRING);
+const { PORT, PASSWORD } = process.env;
+
 const db = knex({
   client: 'pg',
-  connection: PG_CONNECTION_STRING,
+  connection: {
+    host: 'dpg-cfghl09a6gdma8gf5kc0-a.frankfurt-postgres.render.com',
+    port: 5432,
+    user: 'face_app_db_user',
+    password: PASSWORD,
+    database: 'face_app_db',
+    ssl: true,
+  },
 });
 
 app.use(express.json());

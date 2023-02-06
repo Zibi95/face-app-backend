@@ -2,6 +2,8 @@ const handleSignIn = (db, bcrypt) => (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) return res.json('Not enough data');
+
+  console.log(db);
   db.select('*')
     .from('login')
     .where('email', '=', email)
@@ -10,6 +12,7 @@ const handleSignIn = (db, bcrypt) => (req, res) => {
       const isPasswordValid = bcrypt.compareSync(password, hash);
       return isPasswordValid ? db.select('*').from('users').where('email', '=', email) : "User and password doesn't match";
     })
+    .catch(err => res.json(err))
     .then(data => res.json(data))
     .catch(err => res.json('Unable to signin'));
 };

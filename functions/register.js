@@ -8,6 +8,7 @@ const handleRegister = (db, bcrypt) => (req, res) => {
   db.transaction(trx => {
     return trx('login')
       .insert({ email: email, hash: hash })
+      .catch(err => res.json(err))
       .then(() => {
         return trx('users').returning('*').insert({
           name: name,
