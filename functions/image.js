@@ -6,14 +6,14 @@ const PAT = '6d212f09453d4109a531648904f6ca06';
 const APP_ID = 'main';
 const MODEL_ID = 'face-detection';
 // This is optional.You can specify a model version or the empty string for the default
-const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
+const MODEL_VERSION_ID = '45fb9a671625463fa646c3523a3087d5';
 
 const metadata = new grpc.Metadata();
 metadata.set('authorization', 'Key ' + PAT);
 
 const handleApiCall = () => (req, res) => {
   const { imageUrl } = req.body;
-  console.log(imageUrl);
+
   stub.PostModelOutputs(
     {
       user_app_id: {
@@ -22,9 +22,7 @@ const handleApiCall = () => (req, res) => {
       },
       model_id: MODEL_ID,
       version_id: MODEL_VERSION_ID, // This is optional. Defaults to the latest model version.
-      inputs: [
-        { data: { image: { url: imageUrl, allow_duplicate_url: true } } },
-      ],
+      inputs: [{ data: { image: { url: imageUrl, allow_duplicate_url: true } } }],
     },
     metadata,
     (err, response) => {
