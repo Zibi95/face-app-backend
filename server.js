@@ -11,13 +11,15 @@ const knex = require('knex');
 const app = express();
 app.use(cors());
 
+const { PORT, DB_PASSWORD } = process.env;
+
 const db = knex({
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
-    user: 'postgres',
-    password: 'test',
-    database: 'face-app',
+    host: 'dpg-cfghl09a6gdma8gf5kc0-a.frankfurt-postgres.render.com',
+    user: 'face_app_db_user',
+    password: DB_PASSWORD,
+    database: 'face_app_db',
   },
 });
 
@@ -37,5 +39,4 @@ app.put('/image', image.handleImage(db));
 
 app.post('/imageurl', image.handleApiCall());
 
-const { PORT } = process.env;
 app.listen(PORT || 3000);
