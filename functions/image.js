@@ -13,7 +13,6 @@ metadata.set('authorization', 'Key ' + PAT);
 
 const handleApiCall = () => (req, res) => {
   const { imageUrl } = req.body;
-
   stub.PostModelOutputs(
     {
       user_app_id: {
@@ -42,7 +41,7 @@ const handleApiCall = () => (req, res) => {
 const handleImage = db => (req, res) => {
   const { id } = req.body;
 
-  if (!id) return res.status(400).res.json('no image Added');
+  if (!id) return res.json('no image Added');
 
   db('users')
     .where('id', '=', id)
@@ -50,7 +49,7 @@ const handleImage = db => (req, res) => {
     .increment('entries', 1)
     .then(user => res.json(user[0]))
     .catch(err => {
-      console.log('Something went wrong');
+      res.json('Something went wrong');
     });
 };
 

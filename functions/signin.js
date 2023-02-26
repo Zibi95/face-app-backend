@@ -1,6 +1,5 @@
 const handleSignIn = (db, bcrypt) => (req, res) => {
   const { email, password } = req.body;
-
   if (email && password) {
     db.select('*')
       .from('login')
@@ -8,13 +7,13 @@ const handleSignIn = (db, bcrypt) => (req, res) => {
       .then(user => {
         const hash = user[0]['hash'];
         const isPasswordValid = bcrypt.compareSync(password, hash);
-        console.log(isPasswordValid);
-        if (isPasswordValid) {
-          return db.select('*').from('users').where('email', '=', email);
+        if (!isPasswordValid) {
+          return 'Wrong credentials';
         }
+        return db.select('*').from('users').where('email', '=', email);
       })
       .then(data => res.json(data))
-      .catch(err => res.status(400).json('Wrong credentials'));
+      .catch(err => res.json('Something went wrong'));
   } else {
     return res.json('Not enough data');
   }

@@ -1,6 +1,5 @@
 const handleRegister = (db, bcrypt) => (req, res) => {
   const { email, password, name } = req.body;
-
   if (email && password && name) {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
@@ -17,7 +16,7 @@ const handleRegister = (db, bcrypt) => (req, res) => {
         });
     })
       .then(user => res.json(user))
-      .catch(err => res.status(400).json('Something went wrong'));
+      .catch(err => res.json(err));
   } else {
     res.json('Not enough data');
   }
